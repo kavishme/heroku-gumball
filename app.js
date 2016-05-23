@@ -6,7 +6,7 @@ Version 2.0
 
 - Rudimentary Page Templates using RegEx
 - REST Client Calling Grails GORM Scaffolded REST Controller
-- Client State Validation using HMAC Key-Based Hash 
+- Client State Validation using HMAC Key-Based Hash
 
 NodeJS-Enabled Standing Gumball
 Model# M102988
@@ -14,7 +14,7 @@ Serial# 1234998871109
 
 **/
 
-var endpoint = "http://52.40.19.54:8080/gumball/machine/57425000f6ae599172910df5";
+var endpoint = "http://52.40.19.54:8080/gumball/machine/57428080bf685e6f697bed33";
 
 
 // added in v2: crypto
@@ -76,12 +76,14 @@ var page = function( req, res, state, ts ) {
 
     var client = new Client();
             var count = "";
-            client.get( endpoint, 
+            client.get( endpoint,
                 function(data, response_raw){
+                    //console.log("in page get");
                     console.log(data);
+                    data = JSON.parse(data);
                     count = data.countGumballs
-                    console.log( "count = " + count ) ;
-                    var msg =   "\n\nMighty Gumball, Inc.\n\nNodeJS-Enabled Standing Gumball\nModel# " + 
+                    //console.log( data["countGumballs"] + " count = " + count ) ;
+                    var msg =   "\n\nMighty Gumball, Inc.\n\nNodeJS-Enabled Standing Gumball\nModel# " +
                                 data.modelNumber + "\n" +
                                 "Serial# " + data.serialNumber + "\n" +
                                 "\n" + state +"\n\n" ;
@@ -98,22 +100,23 @@ var order = function( req, res, state, ts ) {
 
     var client = new Client();
             var count = 0;
-            client.get( endpoint, 
+            client.get( endpoint,
                 function(data, response_raw) {
+                    data = JSON.parse(data);
                     count = data.countGumballs ;
                     console.log( "count before = " + count ) ;
                     if ( count > 0 ) {
                         count-- ;
                         var args = {
-                            data: {  "countGumballs": count, },
-                            headers:{"Content-Type": "application/json"} 
+                            data: {"countGumballs": count, "serialNumber": data.serialNumber, "modelNumber": data.modelNumber},
+                            headers:{"Content-Type": "application/json"}
                         };
                         client.put( endpoint, args,
                             function(data, response_raw) {
                                 console.log(data);
                                 console.log( "count after = " + data.countGumballs ) ;
                                 page( req, res, state, ts ) ;
-                            } 
+                            }
                         );
                     }
                     else {
@@ -145,7 +148,7 @@ var handle_post = function (req, res) {
             page( req, res, "has-coin", ts ) ;
         else
             page( req, res, state, ts ) ;
-            
+
     }
     else if ( action == "Turn Crank" ) {
         if ( state == "has-coin" ) {
@@ -154,8 +157,8 @@ var handle_post = function (req, res) {
         }
         else
             page( req, res, state, ts ) ;
-    }  
-  
+    }
+
 }
 
 var handle_get = function (req, res) {
