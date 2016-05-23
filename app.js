@@ -14,7 +14,7 @@ Serial# 1234998871109
 
 **/
 
-var endpoint = "http://52.9.120.14:8080/GrailsGumballMachineVer2-2.0/gumballs/1";
+var endpoint = "http://52.40.19.54:8080/gumball/machine/57425000f6ae599172910df5";
 
 
 // added in v2: crypto
