@@ -2,18 +2,21 @@
   "name": "gumball_v2",
   "description": "Simple Test Form",
   "version": "1.0.0",
- "main": "app.js",
+  "main": "app.js",
   "engines": {
     "node": "4.1.1"
   },
   "private": true,
   "scripts": {
     "start": "node app.js"
-  },  
+  },
   "dependencies": {
-    "express" : "3.x",
-    "fs" : "0.0.2",
-    "node-rest-client" : "1.4.1",
-    "crypto" : "0.0.3"
+    "assert": "^1.4.0",
+    "crypto": "0.0.3",
+    "express": "3.x",
+    "fs": "0.0.2",
+    "kerberos": "0.0.21",
+    "mongodb": "^2.1.19",
+    "node-rest-client": "1.4.1"
   }
 }
