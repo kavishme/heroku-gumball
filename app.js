@@ -131,6 +131,7 @@ var page = function( req, res, state, ts ) {
             var html_body = html_body.replace("{message}", msg );
             var html_body = html_body.replace("{ts}", ts );
             var html_body = html_body.replace("{hash}", hash );
+            var html_body = html_body.replace("{count}", count );
             var html_body = html_body.replace(/id="state".*value=".*"/, "id=\"state\" value=\""+state+"\"") ;
             res.end( html_body );
         });
